@@ -24,7 +24,7 @@ class TodoListFragment : Fragment() {
 
     private lateinit var viewModel: ListTodoViewModel
     private val todoListAdapter = TodoListAdapter(arrayListOf(),
-        { item -> viewModel.clearTask(item) })
+        { item -> viewModel.taskDone(item.uuid) })
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

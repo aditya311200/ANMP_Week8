@@ -1,11 +1,14 @@
 package com.example.todo.viewmodel
 
 import android.app.Application
+import android.widget.RadioButton
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.room.Room
 import com.example.todo.model.Todo
 import com.example.todo.model.TodoDatabase
+import com.example.todo.util.buildDB
+import kotlinx.android.synthetic.main.fragment_create_todo.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -27,10 +30,7 @@ class ListTodoViewModel(application: Application): AndroidViewModel(application)
         todoLoadingErrorLD.value = false
 
         launch {
-            val db = Room.databaseBuilder(
-                getApplication(),
-                TodoDatabase::class.java, "newtododb"
-            ).build()
+            val db = buildDB(getApplication())
 
             todoLD.value = db.todoDao().selectAllTodo()
         }
@@ -38,12 +38,19 @@ class ListTodoViewModel(application: Application): AndroidViewModel(application)
 
     fun clearTask(todo: Todo) {
         launch {
-            val db = Room.databaseBuilder(
-                getApplication(),
-                TodoDatabase::class.java, "newtododb"
-            ).build()
+            val db = buildDB(getApplication())
 
             db.todoDao().deleteTodo(todo)
+
+            todoLD.value = db.todoDao().selectAllTodo()
+        }
+    }
+
+    fun taskDone(uuid: Int) {
+        launch {
+            val db = buildDB(getApplication())
+
+            db.todoDao().todoDone(uuid)
 
             todoLD.value = db.todoDao().selectAllTodo()
         }

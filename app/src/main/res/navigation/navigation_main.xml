@@ -7,17 +7,29 @@
     <fragment
         android:id="@+id/todoListFragment"
         android:name="com.example.todo.view.TodoListFragment"
-        android:label="fragment_todo_list"
-        tools:layout="@layout/fragment_todo_list" >
+        android:label="To Do List"
+        tools:layout="@layout/fragment_todo_list">
         <action
             android:id="@+id/actionCreateTodo"
             app:destination="@id/createTodoFragment"
             app:enterAnim="@android:anim/fade_in"
             app:exitAnim="@android:anim/fade_out" />
+        <action
+            android:id="@+id/actionEditTodo"
+            app:destination="@id/editTodoFragment" />
     </fragment>
     <fragment
         android:id="@+id/createTodoFragment"
         android:name="com.example.todo.view.CreateTodoFragment"
-        android:label="fragment_create_todo"
+        android:label="Create To Do"
         tools:layout="@layout/fragment_create_todo" />
+    <fragment
+        android:id="@+id/editTodoFragment"
+        android:name="com.example.todo.view.EditTodoFragment"
+        android:label="Edit To Do"
+        tools:layout="@layout/fragment_edit_todo">
+        <argument
+            android:name="uuid"
+            app:argType="integer" />
+    </fragment>
 </navigation>
